@@ -1,0 +1,23 @@
+### Prueba Cuadrado
+POST http://localhost:8080/figuras/calcular
+Content-Type: application/json
+
+{
+  "nombre": "org.arquitectura.figuras.Cuadrado",
+  "parametros": {
+    "lado": 10
+  }
+}
+
+### Prueba Pentagono Groovy
+POST http://localhost:8080/figuras/calcular
+Content-Type: application/json
+
+{
+  "nombre": "Pentagono",
+  "parametros": {
+    "lado": 5,
+    "apotema": 3.44
+  },
+  "codigoFuente": "public class Pentagono extends org.arquitectura.figuras.Figura {\n    private Integer lado;\n    private Double apotema;\n    \n    @Override \n    public Double perimetro() { \n        return (lado != null) ? (double) (lado * 5) : 0.0; \n    }\n    \n    @Override \n    public Double area() { \n        return (lado != null && apotema != null) ? (perimetro() * apotema) / 2 : 0.0;\n    }\n}"
+}
