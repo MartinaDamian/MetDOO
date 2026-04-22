@@ -1,20 +1,14 @@
-public class Cuadrado extends Figura{
-
-
-    private int lado=0;
+// Cuadrado.java
+public class Cuadrado extends Figura {
+    private Integer lado; // El nombre del atributo debe coincidir con la llave del Map
 
     @Override
-    public Long perimetro() {
-        return Long.valueOf(lado*4);
+    public Double perimetro() {
+        return (lado != null) ? (double) (lado * 4) : 0.0;
     }
 
     @Override
-    public Long area() {
-        return Long.valueOf(lado*lado);
-    }
-
-    @Override
-    public void setDefaultParams() {
-        lado = 4;
+    public Double area() {
+        return (lado != null) ? (double) (lado * lado) : 0.0;
     }
 }

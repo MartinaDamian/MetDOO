@@ -1,9 +1,6 @@
-import java.util.List;
-
+// Figura.java
 public abstract class Figura {
-
-    public Figura(){}
-    public abstract Long perimetro();
-    public abstract Long area();
-    public abstract void setDefaultParams();
+    public abstract Double perimetro(); // Cambié a Double para mayor precisión en Círculos
+    public abstract Double area();
 }
+
