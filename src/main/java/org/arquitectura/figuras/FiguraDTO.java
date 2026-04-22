@@ -1,3 +1,5 @@
+package org.arquitectura.figuras;
+
 import java.util.Map;
 
 public class FiguraDTO {

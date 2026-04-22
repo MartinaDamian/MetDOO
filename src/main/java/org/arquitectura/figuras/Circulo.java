@@ -1,3 +1,5 @@
+package org.arquitectura.figuras;
+
 public class Circulo extends Figura {
     private Double radio; // El nombre del parámetro en el Map será "radio"
 

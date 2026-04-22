@@ -1,3 +1,5 @@
+package org.arquitectura.figuras;
+
 public class Triangulo extends Figura {
     private Double base;   // Key: "base"
     private Double altura; // Key: "altura"

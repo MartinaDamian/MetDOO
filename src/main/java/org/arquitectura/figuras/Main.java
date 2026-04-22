@@ -1,3 +1,5 @@
+package org.arquitectura.figuras;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,23 +11,23 @@ public class Main {
         Map<String, Map<String, Object>> configuracionFiguras = new HashMap<>();
 
         // Datos para un Figuras
-        //Cuadrado
+        //org.arquitectura.figuras.Cuadrado
         Map<String, Object> paramsCuadrado = new HashMap<>();
-        paramsCuadrado.put("lado", 10); // "lado" coincide con el nombre de la variable en Cuadrado.java
+        paramsCuadrado.put("lado", 10); // "lado" coincide con el nombre de la variable en org.arquitectura.figuras.Cuadrado.java
         configuracionFiguras.put("Cuadrado", paramsCuadrado);
-        //Circulo
+        //org.arquitectura.figuras.Circulo
         Map<String, Object> pCirculo = new HashMap<>();
         pCirculo.put("radio", 5.0);
         configuracionFiguras.put("Circulo", pCirculo);
-        //Triangulo
+        //org.arquitectura.figuras.Triangulo
         Map<String, Object> pTriangulo = new HashMap<>();
         pTriangulo.put("base", 10.0);
         pTriangulo.put("altura", 8.0);
         configuracionFiguras.put("Triangulo", pTriangulo);
 
-        // 2. Figura Dinámica en Groovy
+        // 2. org.arquitectura.figuras.Figura Dinámica en Groovy
         String codigoPentagono = """
-            public class Pentagono extends Figura {
+            public class Pentagono extends org.arquitectura.figuras.Figura {
                 private Integer lado;
                 private Double apotema;
                 
@@ -77,7 +79,7 @@ public class Main {
         // Mapeado de atributos
         mapearAtributos(fg, parametros);
 
-        System.out.println("--- Figura: " + fg.getClass().getSimpleName() + " ---");
+        System.out.println("--- org.arquitectura.figuras.Figura: " + fg.getClass().getSimpleName() + " ---");
         System.out.println("Perímetro: " + fg.perimetro());
         System.out.println("Área: " + fg.area() + "\n");
     }

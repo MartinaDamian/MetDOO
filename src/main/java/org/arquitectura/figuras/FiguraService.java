@@ -1,4 +1,6 @@
-import groovy.lang.GroovyClassLoader;
+package org.arquitectura.figuras;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -7,6 +9,9 @@ import java.util.Map;
 @Service
 public class FiguraService {
 
+    @Autowired
+    private FiguraGroovyService figuraGroovyService;
+
     public Map<String, Double> calcularFigura(String nombre, Map<String, Object> params, String codigoGroovy) throws Exception {
         Figura fg;
 
@@ -14,10 +19,7 @@ public class FiguraService {
             Class<?> clazz = Class.forName(nombre);
             fg = (Figura) clazz.getDeclaredConstructor().newInstance();
         } else {
-            try (GroovyClassLoader loader = new GroovyClassLoader()) {
-                Class<?> clazz = loader.parseClass(codigoGroovy);
-                fg = (Figura) clazz.getDeclaredConstructor().newInstance();
-            }
+            fg = figuraGroovyService.cargarFiguraDesdeCodigo(codigoGroovy);
         }
 
         mapearAtributos(fg, params);
@@ -34,7 +36,19 @@ public class FiguraService {
             try {
                 Field field = instancia.getClass().getDeclaredField(entry.getKey());
                 field.setAccessible(true);
-                field.set(instancia, entry.getValue());
+
+                Object valor = entry.getValue();
+
+                // Conversión segura de tipos numéricos provenientes del JSON
+                if (valor instanceof Number) {
+                    if (field.getType().equals(Double.class)) {
+                        valor = ((Number) valor).doubleValue();
+                    } else if (field.getType().equals(Integer.class)) {
+                        valor = ((Number) valor).intValue();
+                    }
+                }
+
+                field.set(instancia, valor);
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.out.println("Advertencia: Atributo '" + entry.getKey() + "' no encontrado.");
             }
