@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FiguraGroovyService {
-    private final GroovyClassLoader loader = new GroovyClassLoader();
+
+    // ESTA ES LA LÍNEA QUE DEBES CAMBIAR
+    private final GroovyClassLoader loader = new GroovyClassLoader(Thread.currentThread().getContextClassLoader());
 
     public Figura cargarFiguraDesdeCodigo(String codigoFuente) throws Exception {
         Class<?> clazz = loader.parseClass(codigoFuente);
+
         if (Figura.class.isAssignableFrom(clazz)) {
             return (Figura) clazz.getDeclaredConstructor().newInstance();
         } else {
