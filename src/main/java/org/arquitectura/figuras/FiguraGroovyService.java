@@ -6,16 +6,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class FiguraGroovyService {
 
-    // ESTA ES LA LÍNEA QUE DEBES CAMBIAR
-    private final GroovyClassLoader loader = new GroovyClassLoader(Thread.currentThread().getContextClassLoader());
-
     public Figura cargarFiguraDesdeCodigo(String codigoFuente) throws Exception {
-        Class<?> clazz = loader.parseClass(codigoFuente);
+        // Groovy 5 maneja mejor el bytecode de Java 24.
+        // Al usar un try-with-resources, cerramos el loader automáticamente.
+        try (GroovyClassLoader loader = new GroovyClassLoader(Figura.class.getClassLoader())) {
+            Class<?> clazz = loader.parseClass(codigoFuente);
 
-        if (Figura.class.isAssignableFrom(clazz)) {
-            return (Figura) clazz.getDeclaredConstructor().newInstance();
-        } else {
-            throw new RuntimeException("El código proporcionado no es una org.arquitectura.figuras.Figura válida.");
+            if (Figura.class.isAssignableFrom(clazz)) {
+                return (Figura) clazz.getDeclaredConstructor().newInstance();
+            } else {
+                throw new RuntimeException("El código proporcionado no es una Figura válida.");
+            }
         }
     }
 }

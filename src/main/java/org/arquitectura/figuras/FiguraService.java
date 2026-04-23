@@ -33,13 +33,12 @@ public class FiguraService {
     private void mapearAtributos(Object instancia, Map<String, Object> parametros) {
         if (parametros == null) return;
         for (Map.Entry<String, Object> entry : parametros.entrySet()) {
+            // Asegúrate de que el bloque try-catch en mapearAtributos sea lo suficientemente amplio
             try {
                 Field field = instancia.getClass().getDeclaredField(entry.getKey());
                 field.setAccessible(true);
-
                 Object valor = entry.getValue();
 
-                // Conversión segura de tipos numéricos provenientes del JSON
                 if (valor instanceof Number) {
                     if (field.getType().equals(Double.class)) {
                         valor = ((Number) valor).doubleValue();
@@ -47,10 +46,9 @@ public class FiguraService {
                         valor = ((Number) valor).intValue();
                     }
                 }
-
                 field.set(instancia, valor);
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                System.out.println("Advertencia: Atributo '" + entry.getKey() + "' no encontrado.");
+            } catch (Exception e) {
+                System.out.println("Error al asignar " + entry.getKey() + ": " + e.getMessage());
             }
         }
     }
